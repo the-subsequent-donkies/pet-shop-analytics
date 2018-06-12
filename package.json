@@ -1,7 +1,7 @@
 {
   "name": "pet-shop-analytics",
   "version": "1.0.0",
-  "description": "Analytics for our ecommerce project",
+  "description": "Analytics for our e-commerce project",
   "engines": {
     "node": ">= 7.0.0"
   },
