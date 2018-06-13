@@ -5,6 +5,7 @@ module.exports = router
 
 router.get('/', (req, res, next) => {
   Request.findAll({
+    order: [['time', 'DESC']]
   })
     .then(requests => res.json(requests))
     .catch(next)
