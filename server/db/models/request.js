@@ -5,15 +5,27 @@ const Request = db.define('request', {
   reqType: {
     type: Sequelize.STRING,
   },
-  URL: {
+  referringSite: {
     type: Sequelize.TEXT,
   },
-  requesterIP: {
+  page: {
+    type: Sequelize.STRING,
+  },
+  time: {
+    type: Sequelize.DATE,
+  },
+  userAgent: {
+    type: Sequelize.STRING,
+  },
+  browser: {
     type: Sequelize.STRING,
   },
   userId: {
     type: Sequelize.INTEGER,
   },
+  socketId: {
+    type: Sequelize.STRING,
+  }
 })
 
 module.exports = Request

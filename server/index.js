@@ -43,6 +43,8 @@ const createApp = () => {
   // compression middleware
   app.use(compression())
 
+  db.sync({force: true})
+
   // session middleware with passport
   app.use(
     session({

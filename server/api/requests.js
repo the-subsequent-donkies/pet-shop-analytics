@@ -11,5 +11,29 @@ router.get('/', (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   console.log(req.body)
-  res.send({message: 'hey'})
+  const myReq = await Request.create({...req.body})
+  res.json(myReq)
+})
+
+router.get('/currentUsers', async (req, res, next) => {
+  const openSockets = await Request.findAll({
+    where: {
+      reqType: 'SOCKET_CONNECTION',
+    }
+  })
+  console.log(openSockets)
+  const closedSockets = await Request.findAll({
+    where: {
+      reqType: 'SOCKET_DISCONNECT'
+    }
+  })
+  console.log('closedSockets>>>>>>>>>>>>>>>>>', closedSockets)
+  const closedSocketIds = closedSockets.map(socket => {
+    return socket.socketId
+  })
+  const currentOpenSockets = openSockets.filter(socket => {
+    return !closedSocketIds.includes(socket.socketId)
+  })
+
+  res.json({currentUserCount: currentOpenSockets.length})
 })
