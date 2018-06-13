@@ -9,9 +9,25 @@ class Analytics extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      //state here
+      // timer: null,
+      // counter: 0
     }
-    this.props.getUsers().then( () => {
+  }
+
+  componentDidMount() {
+    let timer = setInterval(this.tick, 2000)
+    this.setState({timer})
+  }
+
+  componentWillUnmount() {
+    this.clearInterval(this.state.timer);
+  }
+
+  tick = () => {
+    this.setState({
+      counter: this.state.counter + 1
+    });
+    this.props.getUsers().then(() => {
       this.props.getRequests()
     })
   }
@@ -26,16 +42,6 @@ class Analytics extends Component {
               <Header as="h3">Current Users:</Header>
               <Icon name="user plus" size="big" />
               <Header as="h2">{this.props.analytics.currentUsers}</Header>
-            </Segment>
-            <Segment>
-              <Header as="h3">Views per hour:</Header>
-              <Icon name="computer" size="big" />
-              <Header as="h2">0</Header>
-            </Segment>
-            <Segment>
-              <Header as="h3">Average Time Spent:</Header>
-              <Icon name="time" size="big" />
-              <Header as="h2">0</Header>
             </Segment>
           </Segment.Group>
           <Segment>

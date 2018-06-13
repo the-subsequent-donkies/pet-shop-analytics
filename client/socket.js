@@ -6,4 +6,8 @@ socket.on('connect', () => {
   console.log('Connected!')
 })
 
+socket.on('test', (data) => {
+  console.log('data', data)
+})
+
 export default socket

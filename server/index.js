@@ -11,7 +11,8 @@ const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 6969
 const app = express()
 const socketio = require('socket.io')
-module.exports = app
+
+let server
 
 /**
  * In your development environment, you can keep all of your
@@ -90,9 +91,11 @@ const createApp = () => {
 
 const startListening = () => {
   // start listening (and create a 'server' object representing our server)
-  const server = app.listen(PORT, () =>
+  server = app.listen(PORT, () =>
     console.log(`Mixing it up on port ${PORT}`)
   )
+
+  module.exports = { app, server }
 
   // set up our socket control center
   const io = socketio(server)
@@ -114,3 +117,5 @@ if (require.main === module) {
 } else {
   createApp()
 }
+
+
