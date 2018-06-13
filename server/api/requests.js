@@ -21,13 +21,11 @@ router.get('/currentUsers', async (req, res, next) => {
       reqType: 'SOCKET_CONNECTION',
     }
   })
-  console.log(openSockets)
   const closedSockets = await Request.findAll({
     where: {
       reqType: 'SOCKET_DISCONNECT'
     }
   })
-  console.log('closedSockets>>>>>>>>>>>>>>>>>', closedSockets)
   const closedSocketIds = closedSockets.map(socket => {
     return socket.socketId
   })
@@ -36,4 +34,25 @@ router.get('/currentUsers', async (req, res, next) => {
   })
 
   res.json({currentUserCount: currentOpenSockets.length})
+})
+
+router.get('/currentUserList', async (req, res, next) => {
+  const openSockets = await Request.findAll({
+    where: {
+      reqType: 'SOCKET_CONNECTION',
+    }
+  })
+  const closedSockets = await Request.findAll({
+    where: {
+      reqType: 'SOCKET_DISCONNECT'
+    }
+  })
+  const closedSocketIds = closedSockets.map(socket => {
+    return socket.socketId
+  })
+  const currentOpenSockets = openSockets.filter(socket => {
+    return !closedSocketIds.includes(socket.socketId)
+  })
+
+  res.json({currentOpenSockets})
 })
